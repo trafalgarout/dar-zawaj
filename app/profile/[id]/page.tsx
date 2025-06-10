@@ -29,12 +29,12 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   // After all hooks, check for girl
   if (!girl) return notFound();
 
-  // Pick 6 similar profiles (excluding this one)
+  // Now it's safe to use girl
   const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
 
   // Fetch comments from Supabase on mount or id change
   useEffect(() => {
-    if (!girl) return;
+    // girl is always defined here
     const fetchComments = async () => {
       setLoading(true);
       setError(null);
