@@ -12,17 +12,24 @@ import { supabase } from '../../../lib/supabaseClient';
 export default function ProfilePage({ params }: { params: { id: string } }) {
   // Unwrap params using React.use() for Next.js compatibility
   const { id } = React.use(params);
+
+  // Supabase persistent comments
+  interface Comment {
+    id: string;
+    profile_id: string;
+    comment: string;
+    created_at: string;
+  }
+  const [commentText, setCommentText] = useState('');
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const girl = girls.find(g => g.id === id);
   if (!girl) return notFound();
 
   // Pick 6 similar profiles (excluding this one)
   const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
-
-  // Supabase persistent comments
-  const [commentText, setCommentText] = useState('');
-  const [comments, setComments] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   // Fetch comments from Supabase on mount
   useEffect(() => {
