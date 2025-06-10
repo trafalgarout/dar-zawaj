@@ -18,8 +18,8 @@ export default function AdBanner({ index = 1 }: { index?: number }) {
     // Only push if adsbygoogle is available (client-side)
     if (typeof window !== "undefined" && (window as any).adsbygoogle) {
       try {
-        (window as any).adsbygoogle.push({});
-      } catch (e) {}
+        (window as unknown as { adsbygoogle: { push: (args?: unknown) => void } }).adsbygoogle.push({});
+      } catch {}
     }
   }, [index]);
 

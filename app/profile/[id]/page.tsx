@@ -26,10 +26,12 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [error, setError] = useState<string | null>(null);
 
   const girl = girls.find(g => g.id === id);
-  if (!girl) return notFound();
 
   // Pick 6 similar profiles (excluding this one)
-  const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
+  const similar = girl ? girls.filter(g => g.id !== girl.id).slice(0, 6) : [];
+
+  // Early return if girl not found
+  if (!girl) return notFound();
 
   // Fetch comments from Supabase on mount
   useEffect(() => {
