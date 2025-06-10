@@ -13,7 +13,6 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   // Get id from params
   const { id } = params;
   const girl = girls.find(g => g.id === id);
-  if (!girl) return notFound(); // Early return, no hooks called if girl not found
 
   // Supabase persistent comments
   interface Comment {
@@ -26,6 +25,8 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  if (!girl) return notFound();
 
   // Pick 6 similar profiles (excluding this one)
   const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
