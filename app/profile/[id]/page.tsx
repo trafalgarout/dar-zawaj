@@ -10,8 +10,8 @@ import { supabase } from '../../../lib/supabaseClient';
 
 
 export default function ProfilePage({ params }: { params: { id: string } }) {
-  // Unwrap params using React.use() for Next.js compatibility
-  const { id } = React.use(params);
+  // Get id from params
+  const { id } = params;
   const girl = girls.find(g => g.id === id);
   if (!girl) return notFound(); // Early return, no hooks called if girl not found
 
