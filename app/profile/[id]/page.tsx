@@ -32,8 +32,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   // Pick 6 similar profiles (excluding this one)
   const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
 
-  // Fetch comments from Supabase on mount or girl.id change
+  // Fetch comments from Supabase on mount or id change
   useEffect(() => {
+    if (!girl) return;
     const fetchComments = async () => {
       setLoading(true);
       setError(null);
@@ -51,7 +52,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       setLoading(false);
     };
     fetchComments();
-  }, [girl.id]);
+  }, [id]);
 
   // Handle comment submit
   const handleCommentSubmit = async (e: React.FormEvent) => {
