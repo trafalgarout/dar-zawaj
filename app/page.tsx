@@ -5,8 +5,9 @@ const CARDS_PER_PAGE = 20;
 
 import AdBanner from '../components/AdBanner';
 
-export default function Home({ searchParams }: { searchParams?: { page?: string } }) {
-  const page = parseInt(searchParams?.page || '1', 10);
+export default async function Home({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
+  const resolvedSearchParams = await searchParams;
+  const page = parseInt(resolvedSearchParams?.page || '1', 10);
   const startIdx = (page - 1) * CARDS_PER_PAGE;
   const endIdx = startIdx + CARDS_PER_PAGE;
   const currentGirls = girls.slice(startIdx, endIdx);

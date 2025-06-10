@@ -26,8 +26,8 @@ export default function GirlCard({ id, name, image, followers }: GirlCardProps) 
         )}
       </div>
       <div className="flex flex-col items-center w-full">
-        <div className="font-bold text-base sm:text-lg mb-1 font-arabic text-center" style={{fontFamily:'Cairo, Amiri, sans-serif'}}>{name}</div>
-        <span className="bg-pink-100 px-2 py-1 rounded-full flex items-center gap-1 mt-1">
+        <div className="font-bold text-base sm:text-lg mb-1 font-arabic text-center text-gray-800" style={{fontFamily:'Cairo, Amiri, sans-serif'}}>{name}</div>
+        <span className="bg-pink-100 px-2 py-1 rounded-full flex items-center gap-1 mt-1 text-pink-700">
           <svg width="16" height="16" fill="currentColor" className="inline"><path d="M8 14s6-3.33 6-8A6 6 0 1 0 2 6c0 4.67 6 8 6 8z"/></svg>
           {followers} ❤️
         </span>
