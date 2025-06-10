@@ -12,13 +12,20 @@ const adConfigs = [
   { slot: "8342099801", label: "AI ADS 6" },
 ];
 
+interface WindowWithAds extends Window {
+  adsbygoogle: { push: (args?: unknown) => void }[];
+}
+
 export default function AdBanner({ index = 1 }: { index?: number }) {
   const config = adConfigs[(index - 1) % adConfigs.length];
   useEffect(() => {
     // Only push if adsbygoogle is available (client-side)
-    if (typeof window !== "undefined" && (window as any).adsbygoogle) {
+    if (
+      typeof window !== "undefined" &&
+      Array.isArray((window as WindowWithAds).adsbygoogle)
+    ) {
       try {
-        (window as unknown as { adsbygoogle: { push: (args?: unknown) => void } }).adsbygoogle.push({});
+        (window as WindowWithAds).adsbygoogle.push({});
       } catch {}
     }
   }, [index]);

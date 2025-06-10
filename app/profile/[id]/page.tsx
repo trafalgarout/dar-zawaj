@@ -12,6 +12,8 @@ import { supabase } from '../../../lib/supabaseClient';
 export default function ProfilePage({ params }: { params: { id: string } }) {
   // Unwrap params using React.use() for Next.js compatibility
   const { id } = React.use(params);
+  const girl = girls.find(g => g.id === id);
+  if (!girl) return notFound(); // Early return, no hooks called if girl not found
 
   // Supabase persistent comments
   interface Comment {
@@ -25,13 +27,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const girl = girls.find(g => g.id === id);
-
   // Pick 6 similar profiles (excluding this one)
-  const similar = girl ? girls.filter(g => g.id !== girl.id).slice(0, 6) : [];
+  const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
 
-  // Early return if girl not found
-  if (!girl) return notFound();
 
   // Fetch comments from Supabase on mount
   useEffect(() => {
