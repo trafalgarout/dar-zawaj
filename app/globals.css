@@ -22,5 +22,28 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Cairo', 'Amiri', sans-serif;
+  direction: rtl;
+  --color-primary: #04E762;
+  --color-accent: #F5B700;
+  --color-info: #00A1E4;
+  --color-secondary: #DC0073;
+}
+
+/* Always force white background for all previews and users */
+body {
+  background: #fff !important;
+}
+
+a, .link {
+  color: var(--color-secondary);
+  transition: color 0.2s;
+}
+a:hover, .link:hover {
+  color: var(--color-accent);
+}
+
+/* Use Tailwind's font-arabic as default */
+.font-arabic {
+  font-family: 'Cairo', 'Amiri', sans-serif;
 }
