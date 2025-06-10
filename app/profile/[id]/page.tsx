@@ -14,6 +14,9 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const { id } = params;
   const girl = girls.find(g => g.id === id);
 
+  // If no girl, bail out before any hooks
+  if (!girl) return notFound();
+
   // Supabase persistent comments
   interface Comment {
     id: string;
@@ -26,15 +29,11 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  if (!girl) return notFound();
-
   // Pick 6 similar profiles (excluding this one)
   const similar = girls.filter(g => g.id !== girl.id).slice(0, 6);
 
-
-  // Fetch comments from Supabase on mount or id change
+  // Fetch comments from Supabase on mount or girl.id change
   useEffect(() => {
-    if (!girl) return;
     const fetchComments = async () => {
       setLoading(true);
       setError(null);
@@ -52,7 +51,7 @@ export default function ProfilePage({ params }: { params: { id: string } }) {
       setLoading(false);
     };
     fetchComments();
-  }, [id]);
+  }, [girl.id]);
 
   // Handle comment submit
   const handleCommentSubmit = async (e: React.FormEvent) => {
